@@ -31,9 +31,19 @@ function Book(title, author, id, pages, readFlag) {
 function addBookToLibrary(title, author, id, pages, readFlag) {
 
     //we assume that all ids are unique!! if id exists, then old book is removed first
+    const length = myLibrary.length;
     myLibrary = myLibrary.filter(el => el.id !== id);
+    const duplicateBookFound = myLibrary.length < length;
     const book = new Book(title, author, id, pages, readFlag);
     myLibrary.push(book);
+    if (duplicateBookFound) {
+        bookSectionEl.innerHTML = ""; //reset if clear is set to true;
+        displayMyLibrary();
+    } else {
+        displayNewBook(book);
+    }
+
+
     return book;
 }
 
@@ -51,9 +61,8 @@ function displayNewBook(book) {
         `<div><button data-index="${i}" data-type="toggle" type="button">Toggle Read</button><button data-index="${i}" data-type="delete" type="button">Delete Book</button></div></article>`;
 }
 
-addBookToLibrary("My First Book", "Its Author", 111, 111, true);
+addBookToLibrary("Just a Placeholder Book", "Delete Me!", 111, 111, true);
 
-displayMyLibrary();
 closeButton.addEventListener("click", e => {
     console.log(e.target);
     dialog.close();
@@ -69,7 +78,7 @@ addButton.addEventListener("click", e => {
 
     if (name && author && id && pages) {
         const book = addBookToLibrary(name, author, parseInt(id), parseInt(pages), readFlag);
-        displayNewBook(book);
+
         requiredMsg.classList.remove("highlighted");
         dialog.close();
     } else {
@@ -82,7 +91,7 @@ document.addEventListener("click", (e) => {
         dialog.showModal();
     } else if (e.target.getAttribute("data-type")) {
         const action = e.target.getAttribute("data-type");
-        const children = bookSectionEl.childNodes;
+        const children = bookSectionEl.children;
         let nodeNotFound = true;
         let c = 0;
 
