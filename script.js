@@ -1,5 +1,5 @@
 "use strict";
-const myLibrary = [];
+let myLibrary = [];
 const bookSectionEl = document.querySelector("section");
 
 function Book(title, author, pages, readFlag) {
@@ -40,17 +40,21 @@ document.addEventListener("click", (e) => {
     } else if (e.target.getAttribute("data-type")) {
         const action = e.target.getAttribute("data-type");
         const index = parseInt(e.target.getAttribute("data-index"));
-        const children = bookSectionEl.childNodes.values();
+        const children = bookSectionEl.childNodes;
+        const nodeNotFound = true;
+        let c = 0;
 
         if (action === "delete") {
             const newLib = myLibrary.filter((el, i) => i !== index);
-            for (const el in children) {
-                if (el.nodeType === 1 && el.getAttribute("data-index")) {
-                    bookSectionEl.removeChild(el);
+            do {
+                if (children[c].nodeType === 1 && children[c].getAttribute("data-index")) {
+                    bookSectionEl.removeChild(children[c]);
                     myLibrary = newLib;
-                    break;
+                    nodeNotFound = false;
+                } else {
+                    c++;
                 }
-            }
+            } while (nodeNotFound)
         }
 
     }

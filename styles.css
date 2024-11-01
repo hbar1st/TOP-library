@@ -9,16 +9,21 @@ main {
     color: black;
     padding: 30px;
 
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: min-content;
+    grid-template-rows: min-content min-content max-content;
+    grid-auto-rows: 1fr;
     gap: 15px;
+    justify-items: center;
 
     &>button {
         padding: 15px;
-        font-size: 2rem;
+        font-size: 1rem;
         font-weight: 800;
-        width: fit-content;
-        margin-left: auto;
+        aspect-ratio: 2;
+        border-radius: 15px;
+        outline: none;
+        border: 1px solid rgb(101, 127, 164);
     }
 
     section {
