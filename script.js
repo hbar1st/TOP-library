@@ -2,14 +2,15 @@
 let myLibrary = [];
 const bookSectionEl = document.querySelector("section");
 
-function Book(title, author, pages, readFlag) {
+function Book(title, author, id, pages, readFlag) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.readFlag = readFlag;
+    this.id = id;
 
     this.info = () => {
-        return `title: ${this.title}, author: ${this.author}, pages: ${this.pages}, read: ${this.readFlag}`;
+        return `title: ${this.title}, author: ${this.author}, id: ${this.id}, pages: ${this.pages}, read: ${this.readFlag}`;
     };
 
     this.toDiv = () => {
@@ -17,20 +18,21 @@ function Book(title, author, pages, readFlag) {
     }
 }
 
-function addBookToLibrary(title, author, pages, readFlag) {
-    myLibrary.push(new Book(title, author, pages, readFlag));
+function addBookToLibrary(title, author, id, pages, readFlag) {
+    myLibrary.push(new Book(title, author, id, pages, readFlag));
 }
 
 function displayMyLibrary() {
 
-    myLibrary.forEach((book, i) => {
+    myLibrary.forEach(book => {
+        const i = book.id;
         bookSectionEl.innerHTML += `<article data-index="${i}">` + book.toDiv() +
             `<div><button data-index="${i}" data-type="toggle" type="button">Toggle Read</button><button data-index="${i}" data-type="delete" type="button">Delete Book</button></div></article>`;
     });
 
 }
 
-addBookToLibrary("My First Book", "Its Author", 111, true);
+addBookToLibrary("My First Book", "Its Author", 111, 111, true);
 
 displayMyLibrary();
 
@@ -39,23 +41,35 @@ document.addEventListener("click", (e) => {
 
     } else if (e.target.getAttribute("data-type")) {
         const action = e.target.getAttribute("data-type");
-        const index = parseInt(e.target.getAttribute("data-index"));
         const children = bookSectionEl.childNodes;
-        const nodeNotFound = true;
+        let nodeNotFound = true;
         let c = 0;
 
-        if (action === "delete") {
-            const newLib = myLibrary.filter((el, i) => i !== index);
-            do {
-                if (children[c].nodeType === 1 && children[c].getAttribute("data-index")) {
-                    bookSectionEl.removeChild(children[c]);
+
+        do {
+            const bookEl = children[c];
+            if (bookEl.nodeType === 1) {
+                const index = parseInt(bookEl.getAttribute("data-index"));
+                if (action === "delete") {
+                    const newLib = myLibrary.filter(el => el.id !== index);
+                    bookSectionEl.removeChild(bookEl);
                     myLibrary = newLib;
-                    nodeNotFound = false;
-                } else {
-                    c++;
+                } else { //assume it is a toggle request
+                    myLibrary.forEach((book, i) => {
+                        if (book.id === index) {
+                            book.readFlag = !book.readFlag;
+                            if (book.readFlag) {
+                                bookEl.firstElementChild.lastElementChild.classList.replace("unread", "read");
+                            } else {
+                                bookEl.firstElementChild.lastElementChild.classList.replace("read", "unread");
+                            }
+                        }
+                    });
                 }
-            } while (nodeNotFound)
-        }
+                nodeNotFound = false;
+            }
+            c++;
+        } while (nodeNotFound);
 
     }
 
