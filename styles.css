@@ -5,43 +5,52 @@
 }
 
 main {
-    background-color: seashell;
-    color: black;
+    background-color: rgb(104, 57, 22);
+    color: beige;
     padding: 30px;
-
     display: grid;
-    grid-template-columns: min-content;
+    grid-template-columns: auto;
     grid-template-rows: min-content min-content max-content;
     grid-auto-rows: 1fr;
     gap: 15px;
     justify-items: center;
+    max-width: 100vw;
+    min-height: 100vh;
+
 
     &>button {
         padding: 15px;
         font-size: 1rem;
         font-weight: 800;
-        aspect-ratio: 2;
-        border-radius: 15px;
+        aspect-ratio: 3;
+        border-radius: 3px;
         outline: none;
-        border: 1px solid rgb(101, 127, 164);
+        border: 1px ridge rgb(120, 126, 134);
+        box-shadow: 1px 1px 3px 3px rgb(120, 126, 134);
     }
 
     section {
-        border: 2px solid black;
-        padding: 15px;
-        display: grid;
+        color: black;
+        display: flex;
+        flex-wrap: wrap;
 
         grid-template-columns: repeat(auto-fill, minmax(150px, 200px));
-        grid-template-rows: repeat(auto-fit, minmax(150px, 200px));
+        grid-template-rows: repeat(auto-fit, minmax(fit-content, 200px));
         grid-auto-columns: 150px;
         gap: 15px;
+
+
 
         article {
             display: flex;
             flex-direction: column;
             gap: 0px;
-
+            justify-content: space-between;
             border: 1px solid darkgreen;
+            aspect-ratio: .79;
+
+            background: #fafafa;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3), 0 0 300px 25px rgba(222, 198, 122, 0.7) inset;
 
             &>div:first-child {
                 padding: 15px;
@@ -63,18 +72,21 @@ main {
 
                 button {
                     border-radius: 7px;
-                    padding: 2px;
+                    padding: 4px 8px;
+                    line-height: 1.5;
                     margin: 4px;
                     flex: 1;
                     border: none;
                     outline: none;
                     font-weight: 600;
-                    background-color: rgb(205, 221, 225);
+                    background-color: rgba(65, 28, 28, .6);
+                    color: #fafafa;
                 }
 
             }
         }
     }
+
 }
 
 .unread::after {
@@ -86,4 +98,56 @@ main {
     content: "\2714";
     margin-left: .5rem;
     color: rgb(3, 206, 3);
+}
+
+dialog {
+    margin: initial;
+    padding: initial;
+
+    #required {
+        display: flex;
+        justify-content: center;
+        color: black;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+
+        fieldset {
+            margin: 10px;
+            display: grid;
+            gap: 5px;
+            padding: 15px;
+
+            font-weight: 700;
+
+            label:last-of-type {
+                margin-top: 10px;
+            }
+
+            legend {
+                margin: auto;
+            }
+
+            input {
+                padding: 2px;
+                font-size: 1rem;
+                letter-spacing: 1px;
+            }
+
+        }
+
+        button {
+            padding: 5px;
+            font-weight: 800;
+            margin: 5px;
+        }
+    }
+}
+
+#required.highlighted {
+    color: red;
+    font-weight: 900;
+    text-decoration: underline;
 }

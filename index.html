@@ -12,7 +12,21 @@
     <main>
         <h1>My Library</h1>
         <button id="add-book" type="button">Add New Book</button>
-
+        <dialog>
+            <button autofocus>Cancel</button>
+            <p id="required">All fields are required.</p>
+            <form action="" method="POST" formmethod="dialog">
+                <fieldset>
+                    <legend>New Book Details</legend>
+                    <label for="name"></label>Book Name: <input required type="text" name="name" id="name">
+                    <label for="author"></label>Author: <input required type="text" name="author" id="author">
+                    <label for="id"></label>ID: <input required type="number" name="id" id="id">
+                    <label for="pages"></label>Pages: <input required type="number" name="pages" id="pages">
+                    <label for="read-flag">Read? <input required type="checkbox" name="readFlag" id="read-flag"></label>
+                </fieldset>
+                <button type="submit">Add This Book</button>
+            </form>
+        </dialog>
         <section>
         </section>
     </main>
