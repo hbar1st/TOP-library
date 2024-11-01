@@ -1,9 +1,13 @@
 "use strict";
+
 let myLibrary = [];
+
 const bookSectionEl = document.querySelector("section");
 const dialog = document.querySelector("dialog");
-const closeButton = document.querySelector("dialog button");
 const addButton = document.querySelector("dialog>form>button");
+
+// dialog form fields and buttons
+const closeButton = document.querySelector("dialog button");
 const nameField = document.querySelector("#name");
 const authorField = document.querySelector("#author");
 const idField = document.querySelector("#id");
@@ -11,7 +15,15 @@ const pagesField = document.querySelector("#pages");
 const readFlagField = document.querySelector("#read-flag");
 const requiredMsg = document.querySelector('#required');
 
-
+/**
+ * Create a Book Object
+ * 
+ * @param {*} title 
+ * @param {*} author 
+ * @param {*} id must be a unique number
+ * @param {*} pages total number of pages
+ * @param {*} readFlag was it read or not?
+ */
 function Book(title, author, id, pages, readFlag) {
     this.title = title;
     this.author = author;
@@ -42,7 +54,6 @@ function addBookToLibrary(title, author, id, pages, readFlag) {
     } else {
         displayNewBook(book);
     }
-
 
     return book;
 }
@@ -88,13 +99,16 @@ addButton.addEventListener("click", e => {
 
 document.addEventListener("click", (e) => {
     if (e.target.getAttribute("id") === "add-book") {
+        //user wants to add a book
         dialog.showModal();
     } else if (e.target.getAttribute("data-type")) {
+        //user clicked on one of the book buttons
         const action = e.target.getAttribute("data-type");
         const children = bookSectionEl.children;
         let nodeNotFound = true;
         let c = 0;
 
+        // each book has a unique data-index number (like an ISBN type thing but not)
         const index = parseInt(e.target.getAttribute("data-index"));
 
         do {
@@ -105,7 +119,7 @@ document.addEventListener("click", (e) => {
                     bookSectionEl.removeChild(bookEl);
                     myLibrary = newLib;
                     nodeNotFound = false;
-                } else { //assume it is a toggle request
+                } else { //assume it is a toggle read request
                     if (parseInt(bookEl.getAttribute("data-index")) === index) {
                         //found the book in the DOM that we need to toggle readFlag for
                         // now find the same book in myLibrary

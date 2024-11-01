@@ -101,16 +101,27 @@ main {
 }
 
 dialog {
-    margin: initial;
+    margin: 4rem auto;
     padding: initial;
-    position: absolute;
-    top: 2rem;
-    left: 2rem;
+
+    background: #fafafa;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3), 0 0 300px 25px rgba(222, 198, 122, 0.7) inset;
 
     #required {
         display: flex;
         justify-content: center;
         color: black;
+        margin: 5px auto;
+    }
+
+    >button {
+        padding: 2px;
+        letter-spacing: .5px;
+        font-weight: 700;
+        border-radius: 4px;
+        margin-top: 4px;
+        margin-left: 3px;
+        background-color: beige;
     }
 
     form {
@@ -153,4 +164,9 @@ dialog {
     color: red;
     font-weight: 900;
     text-decoration: underline;
+}
+
+button:hover {
+    background-color: white;
+    box-shadow: 1px 1px 2px 2px rgba(139, 0, 0, 0.549);
 }
