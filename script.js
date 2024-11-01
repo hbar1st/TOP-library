@@ -1,6 +1,9 @@
 "use strict";
 
 let myLibrary = [];
+var crumple = new Audio("crumpling-paper-39549.mp3");
+var twinkle = new Audio("sound-effect-twinklesparkle-115095.mp3");
+
 
 const bookSectionEl = document.querySelector("section");
 const dialog = document.querySelector("dialog");
@@ -70,6 +73,7 @@ function displayNewBook(book) {
     const i = book.id;
     bookSectionEl.innerHTML += `<article class="letter" data-index="${i}">` + book.toDiv() +
         `<div><button data-index="${i}" data-type="toggle" type="button">Toggle Read</button><button data-index="${i}" data-type="delete" type="button">Delete Book</button></div></article>`;
+    playAudio(twinkle);
 }
 
 addBookToLibrary("Just a Placeholder Book", "Delete Me!", 111, 111, true);
@@ -115,6 +119,7 @@ document.addEventListener("click", (e) => {
             const bookEl = children[c];
             if (bookEl.nodeType && bookEl.nodeType === 1) {
                 if (action === "delete") {
+                    playAudio(crumple);
                     const newLib = myLibrary.filter(el => el.id !== index);
                     bookSectionEl.removeChild(bookEl);
                     myLibrary = newLib;
@@ -142,3 +147,7 @@ document.addEventListener("click", (e) => {
     }
 
 });
+
+function playAudio(sound) {
+    sound.play();
+}
